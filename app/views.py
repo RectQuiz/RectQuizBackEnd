@@ -23,7 +23,20 @@ def painel_estatistica(request, template_name="administracao/paineis/estatistica
     today = date.today()
     usuariosAtivos = User.objects.filter(is_staff=False).filter(last_login__gte=today)
     usuariosCadastrados = User.objects.filter(is_staff=False)
-    return render(request, template_name, {'usuariosAtivos': usuariosAtivos, 'usuariosCadastrados':usuariosCadastrados})
+    denunciasAceitas = Denuncia.objects.filter(verificada="Aceita")
+    denunciasRejeitadas = Denuncia.objects.filter(verificada="Rejeitada")
+    denunciasEA = Denuncia.objects.filter(verificada="Em Análise")
+    perguntas = Quiz.objects.all()
+    temas = Quiz.objects.all()
+    return render(request, template_name,
+                  {'usuariosAtivos': usuariosAtivos,
+                   'usuariosCadastrados':usuariosCadastrados,
+                   'denunciasAceitas': denunciasAceitas,
+                   'denunciasRejeitadas': denunciasRejeitadas,
+                   'denunciasEA': denunciasEA,
+                   'perguntas': perguntas,
+                   'temas': temas
+                   })
 
 @login_required
 def painel_denuncias(request, template_name="administracao/paineis/denuncias.html"):
