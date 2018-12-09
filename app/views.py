@@ -111,6 +111,8 @@ def sair_painel(request):
 def index(request, template_name="index.html"):
     return render(request, template_name)
 
+def quemsomos(request, template_name="quemsomos.html"):
+    return render(request, template_name)
 ############ ROTAS DOS CRUDS ################
 
 #Rotas Tema

@@ -9,6 +9,7 @@ urlpatterns = [
     path('login', autenticacao_painel, name='autenticacao_painel'),
     path('logout', sair_painel, name="sair_painel"),
     path('', index, name="index"),
+    path('sobre', quemsomos, name="sobre"),
 
     #Rotas do tema
     path('temas/', home_tema, name="home_tema"),
