@@ -1,0 +1,87 @@
+{% extends '../base.html' %}
+{% load staticfiles %}
+{% block titulo %}
+Estatísticas
+{% endblock titulo %}
+
+{% block conteudo %}
+<div class="row">
+    <div class="col-sm-6  col-12">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="text-center"><strong>Usuários</strong></h1>
+                <div class="row">
+                    <div class="col-sm-6 col-12">
+                        <div class="card bg-cards-painel text-white">
+                            <div class="card-body">
+                                <h1 class="float-left"><strong>{{ usuariosAtivos.count }}</strong></h1>
+                                <h1 class="float-right"><i class="material-icons align-middle" style="font-size:45pt;">bar_charts</i></h1>
+                                <br><br> <br>
+                                <h2>Ativos hoje</h2>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                    <div class="col-sm-6 col-12">
+                        <div class="card bg-cards-painel text-white">
+                            <div class="card-body">
+                                <h1 class="float-left"><strong>{{ usuariosCadastrados.count }}</strong></h1>
+                                <h1 class="float-right"><i class="material-icons align-middle" style="font-size:45pt;">bar_charts</i></h1>
+                                <br><br> <br>
+                                <h2>Cadastrados</h2>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="text-center"><strong>Denúncias</strong></h1>
+                <div class="row">
+                    <div class="col-sm-4 col-12">
+                        <div class="card bg-cards-painel-yellow text-white">
+                            <div class="card-body">
+                                <h1 class="float-left"><strong>{{ usuariosAtivos.count }}</strong></h1>
+                                <h1 class="float-right"><i class="material-icons align-middle" style="font-size:45pt;">bar_charts</i></h1>
+                                <br><br> <br>
+                                <h2>Em Análise</h2>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                    <div class="col-sm-4 col-12">
+                        <div class="card bg-cards-painel text-white">
+                            <div class="card-body">
+                                <h1 class="float-left"><strong>{{ usuariosCadastrados.count }}</strong></h1>
+                                <h1 class="float-right"><i class="material-icons align-middle" style="font-size:45pt;">bar_charts</i></h1>
+                                <br><br> <br>
+                                <h2>Aceitas</h2>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                    <div class="col-sm-4 col-12">
+                        <div class="card bg-cards-painel-red text-white">
+                            <div class="card-body">
+                                <h1 class="float-left"><strong>{{ usuariosAtivos.count }}</strong></h1>
+                                <h1 class="float-right"><i class="material-icons align-middle" style="font-size:45pt;">bar_charts</i></h1>
+                                <br><br><br>
+                                <h2>Rejeitadas</h2>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock conteudo %}

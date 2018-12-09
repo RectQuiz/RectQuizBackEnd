@@ -1,3 +1,5 @@
+from datetime import date, datetime
+
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import logout, login, authenticate
@@ -8,12 +10,20 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 from .forms import *
+import json
 
 ITEMS_PER_PAGE = 5
 
 @login_required
 def painel_geral(request, template_name="administracao/painel.html"):
     return render(request, template_name)
+
+@login_required
+def painel_estatistica(request, template_name="administracao/paineis/estatistica.html"):
+    today = date.today()
+    usuariosAtivos = User.objects.filter(is_staff=False).filter(last_login__gte=today)
+    usuariosCadastrados = User.objects.filter(is_staff=False)
+    return render(request, template_name, {'usuariosAtivos': usuariosAtivos, 'usuariosCadastrados':usuariosCadastrados})
 
 @login_required
 def painel_denuncias(request, template_name="administracao/paineis/denuncias.html"):
