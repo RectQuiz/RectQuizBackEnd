@@ -20,6 +20,7 @@ from django.urls import path, include
 from rest_framework import routers
 from app.api.viewsets import *
 from app.models import *
+from rest_framework.authtoken.views import obtain_auth_token
 
 router = routers.DefaultRouter()
 router.register(r'denuncias', DenunciaViewSet, basename='Denuncia')
@@ -34,6 +35,7 @@ router.register(r'pquiz', ProgressoQuizViewSet, basename='ProgressoQuiz')
 router.register(r'rquiz', RespostaQuizViewSet, basename='RespostasQuiz')
 
 urlpatterns = [
+    path('api/rest/login/', obtain_auth_token),
     path('api/rest/', include(router.urls)),
     path('admin/', admin.site.urls),
     path('', include('app.urls')),

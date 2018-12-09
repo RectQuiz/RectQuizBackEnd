@@ -1,3 +1,5 @@
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 from .serializers import *
 from ..models import *
@@ -8,14 +10,19 @@ class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+
 class TemaViewSet(ModelViewSet):
     http_method_names = ['get']
     queryset = Tema.objects.all()
     serializer_class = TemaSerializer
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
+
 
 class NivelViewSet(ModelViewSet):
     http_method_names = ['get']
     serializer_class = NivelSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         queryset = Nivel.objects.all()
@@ -27,6 +34,8 @@ class NivelViewSet(ModelViewSet):
 class QuizViewSet(ModelViewSet):
 
     serializer_class = QuizSerializer
+    permission_classes = [IsAuthenticated]
+
     def get_queryset(self):
         queryset = Quiz.objects.all()
         nivel = self.request.query_params.get('nivel', None)
@@ -36,6 +45,7 @@ class QuizViewSet(ModelViewSet):
 
 class DenunciaViewSet(ModelViewSet):
 
+    permission_classes = [IsAuthenticated]
     serializer_class = DenunciaSerializer
     http_method_names = ['post']
 
@@ -49,6 +59,7 @@ class DenunciaViewSet(ModelViewSet):
 class LocalidadeViewSet(ModelViewSet):
 
     serializer_class = LocalidadeSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         queryset = Localidade.objects.all()
@@ -58,6 +69,7 @@ class LocalidadeViewSet(ModelViewSet):
 
 class ProgressoTemaViewSet(ModelViewSet):
     serializer_class = ProgressoTemaSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         queryset = ProgressoTema.objects.all()
@@ -69,6 +81,7 @@ class ProgressoTemaViewSet(ModelViewSet):
 
 class ProgressoNivelViewSet(ModelViewSet):
     serializer_class = ProgressoNivelSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         queryset = ProgressoNivel.objects.all()
@@ -80,6 +93,7 @@ class ProgressoNivelViewSet(ModelViewSet):
 
 class ProgressoQuizViewSet(ModelViewSet):
     serializer_class = ProgressoQuizSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         queryset = ProgressoQuiz.objects.all()
@@ -91,6 +105,7 @@ class ProgressoQuizViewSet(ModelViewSet):
 
 class RespostaQuizViewSet(ModelViewSet):
     serializer_class = RespostaQuizSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         queryset = RespostasQuiz.objects.all()
