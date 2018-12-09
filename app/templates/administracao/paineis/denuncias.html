@@ -1,0 +1,252 @@
+{% extends '../base.html' %}
+
+{% block titulo %}
+Denúncias
+{% endblock titulo %}
+
+{% block conteudo %}
+<div class="row">
+    <div class="col-md-6 col-12">
+        <div class="card bg-cards-painel">
+            <div class="card-body">
+                <h5 class="text-white text-center"><strong>Novas</strong></h5>
+                <div class="table-responsive">
+                    <table class="table table-stripped table-hover table-sm bg-light">
+                        <thead>
+                            <tr>
+                                <th>Enviada em:</th>
+                                <th>Título</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for d in denunciasNovas %}
+                            <tr>
+                                <td>{{ d.data }}</td>
+                                <td>{{ d.titulo }}</td>
+                                <td>
+                                    <a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="#editardn{{ d.pk }}">
+                                        <i class="material-icons align-middle">info</i> Detalhes
+                                    </a>
+                                    <div class="modal fade" id="editardn{{ d.pk }}" role="dialog">
+                                        <div class="modal-dialog modal-md">
+
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    {% if d.imagem is not None %}
+                                                    <img src="{{ d.imagem }}" alt="">
+                                                    {% endif %}
+                                                    <p>
+                                                        <strong>{{ d.titulo }}</strong><br><br>
+                                                        {{ d.descricao }}
+                                                    </p>
+                                                    <p>Autor: {{ d.user.username }}</p>
+                                                    <form method="post">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="id" value="{{ d.pk }}">
+                                                        <input type="hidden" name="status" value="Aceitar">
+                                                        <br>
+                                                        <button class="btn btn-success btn-sm" type="submit">
+                                                            <i class="material-icons align-middle">done</i>Aceitar
+                                                        </button>
+                                                    </form>
+                                                    <form method="post">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="id" value="{{ d.pk }}">
+                                                        <input type="hidden" name="status" value="Rejeitar">
+                                                        <br>
+                                                        <button class="btn btn-danger btn-sm" type="submit">
+                                                            <i class="material-icons align-middle">clear</i>Rejeitar
+                                                        </button>
+                                                    </form>
+                                                    <button type="button" data-dismiss="modal" class="btn btn-danger btn-sm">
+                                                        <i class="material-icons align-middle">cancel</i>Fechar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="3">
+                                    <h5><strong>No momento sem novas denúncias!</strong></h5>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {% with denunciasNovas as paginated %}
+                        {% include "../pagination.html" %}
+                    {% endwith %}
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+    <div class="col-md-6 col-12">
+        <div class="card bg-cards-painel-red">
+            <div class="card-body">
+                <h5 class="text-white text-center"><strong>Rejeitadas</strong></h5>
+                <div class="table-responsive">
+                    <table class="table table-stripped table-hover table-sm bg-light">
+                        <thead>
+                            <tr>
+                                <th>Última Atualização</th>
+                                <th>Título</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for d in denunciasRejeitadas %}
+                            <tr>
+                                <td>{{ d.updated_at }}</td>
+                                <td>{{ d.titulo }}</td>
+                                <td>
+                                    <a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="#editardr{{ d.pk }}">
+                                        <i class="material-icons align-middle">info</i> Detalhes
+                                    </a>
+                                    <div class="modal fade" id="editardr{{ d.pk }}" role="dialog">
+                                        <div class="modal-dialog modal-md">
+
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    {% if d.imagem is not None %}
+                                                    <img src="{{ d.imagem }}" alt="">
+                                                    {% endif %}
+                                                    <p>
+                                                        <strong>{{ d.titulo }}</strong><br><br>
+                                                        {{ d.descricao }}
+                                                    </p>
+                                                    <p>Autor: {{ d.user.username }}</p>
+                                                    <form method="post">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="id" value="{{ d.pk }}">
+                                                        <input type="hidden" name="status" value="Aceitar">
+                                                        <br>
+                                                        <button class="btn btn-success btn-sm" type="submit">
+                                                            <i class="material-icons align-middle">done</i>Aceitar
+                                                        </button>
+                                                    </form>
+                                                    <form method="post">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="id" value="{{ d.pk }}">
+                                                        <input type="hidden" name="status" value="Rejeitar">
+                                                        <br>
+                                                        <button class="btn btn-danger btn-sm" type="submit">
+                                                            <i class="material-icons align-middle">clear</i>Rejeitar
+                                                        </button>
+                                                    </form>
+                                                    <button type="button" data-dismiss="modal" class="btn btn-danger btn-sm">
+                                                        <i class="material-icons align-middle">cancel</i>Fechar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="3">
+                                    <h5><strong>Nenhuma denúncia rejeitada até o momento</strong></h5>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {% with denunciasRejeitadas as paginated %}
+                        {% include "../pagination.html" %}
+                    {% endwith %}
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card bg-cards-painel">
+            <div class="card-body">
+                <h5 class="text-white text-center"><strong>Aceitas</strong></h5>
+                <div class="table-responsive">
+                    <table class="table table-stripped table-hover table-sm bg-light">
+                        <thead>
+                            <tr>
+                                <th>Criada em:</th>
+                                <th>Aceita em:</th>
+                                <th>Título</th>
+                                <th>Username</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for d in denunciasAceitas %}
+                            <tr>
+                                <td>{{ d.data }}</td>
+                                <td>{{ d.updated_at }}</td>
+                                <td>{{ d.titulo }}</td>
+                                <td>{{ d.user.username }}</td>
+                                <td>
+                                    <a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="#editardr{{ d.pk }}">
+                                        <i class="material-icons align-middle">info</i> Detalhes
+                                    </a>
+                                    <div class="modal fade" id="editardr{{ d.pk }}" role="dialog">
+                                        <div class="modal-dialog modal-md">
+
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    {% if d.imagem is not None %}
+                                                    <img src="{{ d.imagem }}" alt="">
+                                                    {% endif %}
+                                                    <p>
+                                                        <strong>{{ d.titulo }}</strong><br><br>
+                                                        {{ d.descricao }}
+                                                    </p>
+                                                    <p>Autor: {{ d.user.username }}</p>
+                                                    <form method="post">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="id" value="{{ d.pk }}">
+                                                        <input type="hidden" name="status" value="Aceitar">
+                                                        <br>
+                                                        <button class="btn btn-success btn-sm" type="submit">
+                                                            <i class="material-icons align-middle">done</i>Aceitar
+                                                        </button>
+                                                    </form>
+                                                    <form method="post">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="id" value="{{ d.pk }}">
+                                                        <input type="hidden" name="status" value="Rejeitar">
+                                                        <br>
+                                                        <button class="btn btn-danger btn-sm" type="submit">
+                                                            <i class="material-icons align-middle">clear</i>Rejeitar
+                                                        </button>
+                                                    </form>
+                                                    <button type="button" data-dismiss="modal" class="btn btn-danger btn-sm">
+                                                        <i class="material-icons align-middle">cancel</i>Fechar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="10">
+                                    <h5><strong>Nenhuma denúncia aceita!</strong></h5>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {% with denunciasAceitas as paginated %}
+                        {% include "../pagination.html" %}
+                    {% endwith %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock conteudo %}

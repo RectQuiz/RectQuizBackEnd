@@ -8,3 +8,6 @@
 .texto-info{font-family: Arial, Helvetica, sans-serif; font-size: 12pt;}
 body { background: #ecedf1;}
 .icon-info-size { font-size: 9pt !important;}
+.card-botao { text-decoration: none; color:white;} .icon-card { font-size: 26pt; }
+.bg-cards-painel { background: #008f4b; }
+.bg-cards-painel-red { background: #ff616f;}

@@ -20,7 +20,7 @@
 <body>
 <nav class="navbar navbar-expand-md navbar-light navbar-django">
     <div class="container">
-        <a style="color:white;" class="navbar-brand float-left" href="{% url 'painel_administrativo' %}">
+        <a style="color:white;" class="navbar-brand float-left" href="{% url 'painel_geral' %}">
             <img width="100" src="{% static 'images/logoPequena.png' %}" alt="Logo da Imagem">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -33,7 +33,9 @@
             {% if request.user.is_authenticated %}
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a style="color:white;" class="nav-link" href="{% url 'painel_administrativo' %}">Início</a>
+                    <a style="color:white;" class="nav-link" href="{% url 'painel_geral' %}">
+                        <strong>Início</strong>
+                    </a>
                 </li>
             </ul>
             {% endif %}

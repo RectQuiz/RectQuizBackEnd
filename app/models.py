@@ -14,12 +14,19 @@ class Localidade(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 class Denuncia(models.Model):
+    TIPOS = (
+        ('Em Análise', 'Em Análise'),
+        ('Rejeitada', 'Rejeitada'),
+        ('Aceita', 'Aceita')
+    )
     imagem = models.ImageField("Imagem", upload_to='denuncias/imagens', null=True)
     titulo = models.CharField("Título", max_length=255, null=False)
     descricao = models.TextField("Descrição", null=False)
+    verificada = models.CharField(null=False, max_length=19, choices=TIPOS, default="Em Análise")
     latitude = models.FloatField(null=True)
     longitude = models.FloatField(null=True)
     data = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 

@@ -12,22 +12,61 @@ from .forms import *
 ITEMS_PER_PAGE = 5
 
 @login_required
+def painel_geral(request, template_name="administracao/painel.html"):
+    return render(request, template_name)
+
+@login_required
+def painel_denuncias(request, template_name="administracao/paineis/denuncias.html"):
+    if request.user.is_staff == True:
+        page = request.GET.get('page')
+        if request.method == "POST":
+            id = request.POST['id']
+            status = request.POST['status']
+            if id:
+                denuncia = Denuncia.objects.get(pk=id)
+                denuncia.verificada = status
+                denuncia.save()
+                return redirect('painel_denuncias')
+
+
+        paginator1 = Paginator(Denuncia.objects.filter(verificada="Em Análise"), ITEMS_PER_PAGE)
+        paginator2 = Paginator(Denuncia.objects.filter(verificada="Rejeitada"), ITEMS_PER_PAGE)
+        paginator3 = Paginator(Denuncia.objects.filter(verificada="Aceita"), ITEMS_PER_PAGE)
+        total = paginator1.count
+        try:
+            denunciasAceitas = paginator3.page(page)
+            denunciasRejeitadas = paginator2.page(page)
+            denunciasNovas = paginator1.page(page)
+        except InvalidPage:
+            denunciasAceitas = paginator3.page(1)
+            denunciasNovas = paginator1.page(1)
+            denunciasRejeitadas = paginator2.page(1)
+        return render(request, template_name,
+                      {'denunciasNovas': denunciasNovas,
+                       'denunciasRejeitadas': denunciasRejeitadas,
+                       'denunciasAceitas': denunciasAceitas
+                       })
+    else:
+        messages.error(request, "Você não tem permissão para acessar essa página!")
+        return redirect('sair_painel')
+
+@login_required
 def painel_administrativo(request, template_name="administracao/home.html"):
     if request.user.is_staff == True:
         page = request.GET.get('page')
-        paginator = Paginator(User.objects.all(), ITEMS_PER_PAGE)
-        total = paginator.count
+        paginator1 = Paginator(User.objects.all(), ITEMS_PER_PAGE)
+        total = paginator1.count
         try:
-            usuarios = paginator.page(page)
+            usuarios = paginator1.page(page)
         except InvalidPage:
-            usuarios = paginator.page(1)
+            usuarios = paginator1.page(1)
         return render(request, template_name, {'lista': usuarios})
     else:
         messages.error(request, "Você não tem permissão para acessar essa página!")
         return redirect('sair_painel')
 
 def autenticacao_painel(request, template_name="administracao/login.html"):
-    next = request.GET.get('next', '/home')
+    next = request.GET.get('next', '/painel')
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
