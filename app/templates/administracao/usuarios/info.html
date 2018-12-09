@@ -1,0 +1,28 @@
+{% extends '../base.html' %}
+
+{% block titulo %}
+Informações do Usuário
+{% endblock titulo %}
+
+{% block conteudo %}
+<br><br>
+<div class="card">
+    <!-- Default panel contents -->
+    <div class="card-header">Detalhes do Usuário</div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <h2><strong>Informações</strong></h2>
+                <p><strong>Nome completo:</strong> {{ usuario.user.first_name }} {{ c.usuario.last_name }}<br>
+                    <strong>Username:</strong> {{ usuario.user.username }} <br>
+                    <strong>Email:</strong> {{ usuario.user.email }} <br>
+                    <strong>Data de Nascimento:</strong> {{ usuario.data_nascimento }} <br>
+                    <strong>Telefone:</strong> {{ usuario.telefone }}
+                    <hr>
+                </p>
+            </div>
+        </div>
+    </div>
+</div><br>
+<a href="{% url 'home_usuarios' %}" class="btn btn-primary">Voltar</a>
+{% endblock conteudo %}

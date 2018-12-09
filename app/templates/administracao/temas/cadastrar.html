@@ -1,0 +1,35 @@
+{% extends '../base.html' %}
+
+{% block titulo %}
+Gerenciar Tema
+{% endblock titulo %}
+
+{% block conteudo %}
+<h2>Gerenciar Tema</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-6 col-12">
+            <label for="titulo">Nome do Tema</label>
+            {{ form.titulo }}
+        </div>
+        <div class="col-md-6 col-12">
+            <label for="fundo">Upload de Imagem</label>
+            {{ form.fundo }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <label for="descricao">Descrição</label>
+            {{ form.descricao }}
+        </div>
+    </div>
+    <br>
+    <button class="btn btn-success btn-sm" type="submit">
+        <i class="material-icons align-middle">save</i>Salvar
+    </button>
+    <a class='btn btn-danger btn-sm' href="{% url 'home_tema'%}">
+        <i class="material-icons align-middle">cancel</i>Cancelar
+    </a>
+</form>
+{% endblock conteudo %}

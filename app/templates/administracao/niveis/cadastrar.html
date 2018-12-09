@@ -1,0 +1,34 @@
+{% extends '../base.html' %}
+
+{% block titulo %}
+Gerenciar Nível
+{% endblock titulo %}
+
+{% block conteudo %}
+<h2>Gerenciar Nível</h2>
+<form method="post">
+    {% csrf_token %}
+    <div class="row">
+
+        {{ form.tema }}
+
+        <div class="col-12">
+            <label for="titulo">Título</label>
+            {{ form.titulo }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <label for="descricao">Descrição</label>
+            {{ form.descricao }}
+        </div>
+    </div>
+    <br>
+    <button class="btn btn-success btn-sm" type="submit">
+        <i class="material-icons align-middle">save</i>Salvar
+    </button>
+    <a class='btn btn-danger btn-sm' href="{% url 'info_tema' pk=pk %}">
+        <i class="material-icons align-middle">cancel</i>Cancelar
+    </a>
+</form>
+{% endblock conteudo %}

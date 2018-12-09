@@ -1,0 +1,131 @@
+{% extends '../base.html' %}
+
+{% block titulo %}
+Informações do Tema
+{% endblock titulo %}
+
+{% block conteudo %}
+<br><br>
+<div class="card">
+    <!-- Default panel contents -->
+    <div class="card-header bg-card-titulo">
+        <h5 class="text-center text-white">
+            <strong>
+                Informações
+            </strong>
+        </h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <p class="texto-info">
+                    <strong>Nome:</strong> {{ tema.titulo }}<br>
+                    <strong>Descrição:</strong> {{ tema.descricao }} <br>
+                    <strong>Níveis cadastrados:</strong>  {{ total }}
+                </p>
+            </div>
+        </div>
+    </div>
+</div><br>
+<!-- Níveis -->
+<div class="card">
+    <!-- Default panel contents -->
+    <div class="card-header bg-card-titulo">
+        <h5 class="text-center text-white">
+            <strong>
+                Níveis deste Tema
+            </strong>
+        </h5>
+    </div>
+    <div class="card-body">
+        <a href="#" class="btn btn-success btn-sm" data-toggle="modal" data-target="#cadastrarNivel">
+            <i class="material-icons align-middle">add</i> Adicionar
+        </a>
+        <div class="modal fade" id="cadastrarNivel" role="dialog">
+            <div class="modal-dialog modal-md">
+
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="row">
+                                {{ form.tema }}
+
+                                <div class="col-12">
+                                    <label for="titulo">Título</label>
+                                    {{ form.titulo }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <label for="descricao">Descrição</label>
+                                    {{ form.descricao }}
+                                </div>
+                            </div>
+                            <br>
+                            <button class="btn btn-success btn-sm" type="submit">
+                                <i class="material-icons align-middle">save</i>Salvar
+                            </button>
+                            <button type="button" data-dismiss="modal" class="btn btn-danger btn-sm">
+                                <i class="material-icons align-middle">cancel</i>Fechar
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+        <div class="table-responsive">
+            <table class="table table-striped table-sm">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Nível</th>
+                        <th>Descrição</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for c in lista %}
+                    <tr>
+                        <td>{{ c.titulo }}</td>
+                        <td>{{ c.descricao }}</td>
+                        <td>
+                            <a title="Informações" href="{% url 'info_nivel' pk=c.pk %}">
+                                <i class="material-icons">info</i>
+                            </a>
+                            <a title="Editar" href="{% url 'editar_nivel' pk=c.pk %}">
+                                <i class="material-icons">edit</i>
+                            </a>
+                            <!-- Confirmação de exclusão -->
+                            <a title="Remover" href="#" data-toggle="modal" data-target="#confirm{{ c.pk }}">
+                                <i class="material-icons">delete</i>
+                            </a>
+                            <div class="modal fade" id="confirm{{ c.pk }}" role="dialog">
+                                <div class="modal-dialog modal-md">
+
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <p> Tem certeza que deseja excluir o nivel?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a class="btn btn-danger" href="{% url 'remover_nivel' c.pk %}">Excluir</a>
+                                            <button type="button" data-dismiss="modal" class="btn btn-default">Cancelar</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% with lista as paginated %}
+                {% include "../pagination.html" %}
+            {% endwith %}
+        </div>
+    </div>
+</div><br>
+<a href="{% url 'home_tema' %}" class="btn btn-primary">Voltar</a>
+{% endblock conteudo %}

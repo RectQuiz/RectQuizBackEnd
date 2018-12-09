@@ -1,0 +1,64 @@
+{% extends '../base.html' %}
+
+{% block titulo %}
+Temas
+{% endblock titulo %}
+
+{% block conteudo %}
+<br>
+<h1>Temas</h1>
+<br>
+<a class="btn btn-success" href="{% url 'cadastrar_nivel' %}">Novo</a>
+<a href="{% url 'home_tema' %}" class="btn btn-primary float-right">Voltar</a>
+
+<hr>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nível</th>
+                <th>Descrição</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for c in lista %}
+            <tr>
+                <td>{{ c.titulo }}</td>
+                <td>{{ c.descricao }}</td>
+                <td>
+                    <a title="Informações" href="{% url 'info_nivel' pk=c.pk %}">
+                        <i class="material-icons">info</i>
+                    </a>
+                    <a title="Editar" href="{% url 'editar_nivel' pk=c.pk %}">
+                        <i class="material-icons">edit</i>
+                    </a>
+                    <!-- Confirmação de exclusão -->
+                    <a title="Remover" href="#" data-toggle="modal" data-target="#confirm{{ c.pk }}">
+                        <i class="material-icons">delete</i>
+                    </a>
+                    <div class="modal fade" id="confirm{{ c.pk }}" role="dialog">
+                        <div class="modal-dialog modal-md">
+
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <p> Tem certeza que deseja excluir o nivel?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <a class="btn btn-danger" href="{% url 'remover_nivel' c.pk %}">Excluir</a>
+                                    <button type="button" data-dismiss="modal" class="btn btn-default">Cancelar</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% with lista as paginated %}
+        {% include "../pagination.html" %}
+    {% endwith %}
+</div>
+{% endblock conteudo %}

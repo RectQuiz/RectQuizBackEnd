@@ -1,0 +1,50 @@
+{% extends '../base.html' %}
+
+{% block titulo %}
+Gerenciar Pergunta
+{% endblock titulo %}
+
+{% block conteudo %}
+<h2>Gerenciar Pergunta</h2>
+<form method="post">
+    {% csrf_token %}
+    <div class="row">
+        {{ form.nivel }}
+        <div class="col-12">
+            <label for="pergunta">Pergunta</label>
+            {{ form.pergunta }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-12">
+            <label for="a">Alternativa A</label>
+            {{ form.a }}
+        </div>
+        <div class="col-md-4 col-12">
+            <label for="b">Alternativa B</label>
+            {{ form.b }}
+        </div>
+        <div class="col-md-4 col-12">
+            <label for="c">Alternativa C</label>
+            {{ form.c }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-12">
+            <label for="d">Alternativa D</label>
+            {{ form.d }}
+        </div>
+        <div class="col-md-6 col-12">
+            <label for="resposta">Resposta</label>
+            {{ form.resposta }}
+        </div>
+    </div>
+    <br>
+    <button class="btn btn-success btn-sm" type="submit">
+        <i class="material-icons align-middle">save</i>Salvar
+    </button>
+    <a href="{% url 'info_nivel' pk=pk %}" class="btn btn-danger btn-sm">
+        <i class="material-icons align-middle">cancel</i>Cancelar
+    </a>
+</form>
+{% endblock conteudo %}

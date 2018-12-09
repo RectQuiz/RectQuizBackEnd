@@ -1,0 +1,10 @@
+.navbar-django{background: #00A859; -webkit-box-shadow:0 2px 4px rgba(0,0,0,.04);box-shadow:0 2px 4px rgba(0,0,0,.04)}
+.navbar-user{background-color:#488af7;-webkit-box-shadow:0 2px 4px rgba(0,0,0,.04);box-shadow:0 2px 4px rgba(0,0,0,.04);font-weight:bold;}
+.fundo-login { background: #00A859; !important; color: white !important;}
+.fundo-login h1 { font-weight: 1000 !important; }
+.fundo-login h4 { font-weight: 1000 !important; }
+.login-usuario { color: white; background: #00A859; }
+.bg-card-titulo { background: #00A859; }
+.texto-info{font-family: Arial, Helvetica, sans-serif; font-size: 12pt;}
+body { background: #ecedf1;}
+.icon-info-size { font-size: 9pt !important;}

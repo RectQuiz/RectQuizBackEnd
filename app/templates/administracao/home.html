@@ -1,0 +1,55 @@
+{% extends './base.html' %}
+
+{% block titulo %}
+Painel Administrativo
+{% endblock titulo %}
+
+{% block conteudo %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 align="center">Gerenciamento</h3>
+                <ul class="list-group">
+                    <a href="{% url 'home_tema' %}"><li class="list-group-item list-group-item-action"><i class="material-icons">message</i>Temas</li></a>
+                    <a href="{% url 'home_usuarios' %}"><li class="list-group-item list-group-item-action"><i class="material-icons">people</i>Usuários</li></a>
+
+                    {% if request.user.is_authenticated and request.user.is_staff %}
+                    <a href="{% url 'home_usuario_admin' %}"><li class="list-group-item list-group-item-action"><i class="material-icons">build</i>Administração</li></a>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 align="center">Novos Usuários</h3>
+                <a href="{% url 'home_usuarios' %}" class="btn btn-primary float-right">Ver mais</a>
+                <br>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th style="font-size:10pt;">Nickname</th>
+                                <th style="font-size:10pt;">Criado em</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for c in lista %}
+                            <tr>
+                                <td style="font-size:10pt;">{{ c.username  }}</td>
+                                <td style="font-size:10pt;">{{ c.date_joined }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% with lista as paginated %}
+                    {% include "./pagination.html" %}
+                {% endwith %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock conteudo %}

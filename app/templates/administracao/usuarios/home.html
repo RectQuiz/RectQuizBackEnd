@@ -1,0 +1,64 @@
+{% extends '../base.html' %}
+
+{% block titulo %}
+Usuários
+{% endblock titulo %}
+
+{% block conteudo %}
+<br>
+<h1>Usuários</h1>
+<br>
+<a href="{% url 'painel_administrativo' %}" class="btn btn-primary float-right">Voltar</a>
+
+<hr>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nome Completo</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Criado em</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for c in lista %}
+            <tr>
+                <td>{{ c.first_name }} {{ c.last_name }}</td>
+                <td>{{ c.username }}</td>
+                <td>{{ c.email }}</td>
+                <td>{{ c.date_joined }}</td>
+                <td>
+                    <a title="Informações" href="{% url 'info_usuarios' pk=c.pk %}">
+                        <i class="material-icons">info</i>
+                    </a>
+                    <!-- Confirmação de exclusão -->
+                    <a title="Remover" href="#" data-toggle="modal" data-target="#confirm{{ c.pk }}">
+                        <i class="material-icons">delete</i>
+                    </a>
+                    <div class="modal fade" id="confirm{{ c.pk }}" role="dialog">
+                        <div class="modal-dialog modal-md">
+
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <p> Tem certeza que deseja excluir o usuário?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <a class="btn btn-danger" href="{% url 'remover_usuarios' c.pk %}">Excluir</a>
+                                    <button type="button" data-dismiss="modal" class="btn btn-default">Cancelar</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% with lista as paginated %}
+        {% include "../pagination.html" %}
+    {% endwith %}
+</div>
+{% endblock conteudo %}
